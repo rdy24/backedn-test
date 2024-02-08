@@ -126,6 +126,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'search_provider' => env('SEARCH_PROVIDER', 'database'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -159,6 +161,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...

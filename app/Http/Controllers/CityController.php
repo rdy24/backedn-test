@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Services\RajaOngkirService;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
+    protected $rajaOngkirService;
+
+    public function __construct(RajaOngkirService $rajaOngkirService)
+    {
+        $this->rajaOngkirService = $rajaOngkirService;
+    }
+    
     public function search(Request $request)
     {
         $searchId = $request->id;
@@ -19,7 +27,11 @@ class CityController extends Controller
 
         $city = City::find($searchId);
 
-        if(!$city) {
+        if (config('app.search_provider') === 'rajaongkir') {
+            $city = $this->rajaOngkirService->getCityById($searchId);
+        }
+
+        if (!$city || (config('app.search_provider') === 'rajaongkir' && empty($city['rajaongkir']['results']))) {
             return response()->json([
                 'message' => 'Data not found'
             ], 404);
