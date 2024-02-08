@@ -77,7 +77,7 @@
 ## Test
 To run the feature test use this command
 ```bash
-    php artisan test --testsuite=Feature --stop-on-failure
+php artisan test --testsuite=Feature --stop-on-failure
 ```
 
 
